@@ -5,13 +5,13 @@
 Transitions [turn-me-into-a-girl.com](https://turn-me-into-a-girl.com) into _turn-me-into-a-boy_.
 
 ## Installation
-1. Install a userscript manager (personally I recommend [Violentmonkey](https://violentmonkey.github.io/get-it/))
+1. Install a userscript manager (I recommend [Violentmonkey](https://violentmonkey.github.io/get-it/))
 2. [Click here](https://github.com/middernacht/turn-me-into-a-boy/raw/main/turn-me-into-a-boy.user.js) to install the userscript
 3. Go to [turn-me-into-a-girl.com](https://turn-me-into-a-girl.com)
 4. Profit
 
 ## Contributing
-If you found an error or would like to make a suggestion you can [create a new issue](https://github.com/middernacht/turn-me-into-a-boy/issues/new) and I'll take a look at it as soon as possible.
+If it doesn't work or you found an error or you have a suggestion you can [create a new issue](https://github.com/middernacht/turn-me-into-a-boy/issues/new) and I'll take a look at it as soon as possible.
 
 ## Credits
-Inspired by (and some text copied from) [this Reddit post](https://www.reddit.com/r/egg_irl/comments/v8emmh/eggirl/) by [u/stealerofbones](https://www.reddit.com/user/stealerofbones/)
+Inspired by (and some text copied from) [this Reddit post](https://www.reddit.com/r/egg_irl/comments/v8emmh/eggirl/) by [u/stealerofbones](https://www.reddit.com/user/stealerofbones/).
