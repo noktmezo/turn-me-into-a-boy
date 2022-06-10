@@ -35,6 +35,7 @@
     "“she": "“he",
     "“her": "“him",
     [m]: "",
+    "find your assigned gender's clothing boring or unexpressive": `feel awkward or uncomfortable as a girl${finalMarker} in girl${finalMarker}s’ clothes`,
     " \\(“cute” or be seen as “soft” or “empathetic”\\)": "",
     "“cute”/": ""
   }
