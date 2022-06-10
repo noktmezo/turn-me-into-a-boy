@@ -79,6 +79,10 @@ the story of <a href="https://en.wikipedia.org/wiki/Marina_the_Monk">Marinos (Ma
     }
   }
 
+  // stop here if we're inside a twitter embed
+  if (location.host === "platform.twitter.com")
+    return;
+
   // replace the text in the browser tab
   document.title = "💖 Turn Me Into A Boy! 💖";
 
