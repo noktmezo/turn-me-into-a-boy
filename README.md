@@ -2,7 +2,7 @@
 ![Screenshot](https://user-images.githubusercontent.com/107230685/173120112-4af5a009-d61b-476e-af85-73d42e5eecd0.jpg)
 
 ## Description
-Transitions [turn-me-into-a-girl.com](https://turn-me-into-a-girl.com) into _turn-me-into-a-boy_.
+Turns [turn-me-into-a-girl.com](https://turn-me-into-a-girl.com) into _turn-me-into-a-boy_.
 
 ## Installation
 1. Install a userscript manager (I recommend [Violentmonkey](https://violentmonkey.github.io/get-it/))

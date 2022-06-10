@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Turn Me Into A Boy
 // @version      1.0
-// @description  Transitions turn-me-into-a-girl.com into boy
+// @description  Turns turn-me-into-a-girl.com into turn-me-into-a-boy
 // @author       u/noktmezo
 // @match        https://turn-me-into-a-girl.com/*
 // @match        https://platform.twitter.com/embed/*
