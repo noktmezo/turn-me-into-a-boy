@@ -71,11 +71,12 @@ the story of <a href="https://en.wikipedia.org/wiki/Marina_the_Monk">Marinos (Ma
     const treeWalker = document.createTreeWalker(contextNode, NodeFilter.SHOW_TEXT);
     let node;
     while (node = treeWalker.nextNode()) {
-      for (const key in otherMap)
-        node.textContent = node.textContent.replace(
-          new RegExp(key + `(?![${m}]+)`, "gi"),
-          otherMap[key] + (addFinalMarker ? m : "")
-        );
+      if (!node.parentNode.closest("a[href^=http]")) // don't replace inside external links
+        for (const key in otherMap)
+          node.textContent = node.textContent.replace(
+            new RegExp(key + `(?![${m}]+)`, "gi"),
+            otherMap[key] + (addFinalMarker ? m : "")
+          );
     }
   }
 
