@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Turn Me Into A Boy
-// @version      1.2
+// @version      1.3
 // @description  Turns turn-me-into-a-girl.com into turn-me-into-a-boy
 // @author       u/noktmezo
 // @match        https://turn-me-into-a-girl.com/*
@@ -15,8 +15,8 @@
 (function () {
   // stop if the twitter embed isn't inside turn-me-into-a-girl.com
   if (location.host === "platform.twitter.com" && document.referrer !== "https://turn-me-into-a-girl.com/")
-      return;
-      
+    return;
+
   // marker to mark stuff that shouldn't be touched by following replacements
   const m = "\u200b";
 
@@ -51,32 +51,22 @@ in one, a monastic named <a href="https://en.wikipedia.org/wiki/Legend_of_Hilari
 the story of <a href="https://en.wikipedia.org/wiki/Marina_the_Monk">Marinos (Marina)</a>, another Byzantine, who became a monk in Lebanon, is similar.
 `;
 
-  startReplacing();
+  if (location.host === "platform.twitter.com") {
+    // replace text inside new nodes
+    new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (!mutation.addedNodes)
+          return;
 
-  function startReplacing(contextNode = document.body) {
-    replaceTextNodes(contextNode);
-  }
-
-  function replaceTextNodes(contextNode, otherMap = map, addFinalMarker = true) {
-    const treeWalker = document.createTreeWalker(contextNode, NodeFilter.SHOW_TEXT);
-    let node;
-    while (node = treeWalker.nextNode()) {
-      if (!node.parentNode.closest("a[href^=http]")) { // don't replace inside external links
-        for (const key in otherMap) {
-          const re = new RegExp(key + `(?!${m})`, "gi");
-          if (re.test(node.textContent))
-            node.textContent = node.textContent.replace(re, otherMap[key] + (addFinalMarker ? m : ""));
-        }
-
-        if (node.textContent.includes(m))
-          node.textContent = node.textContent.replace(new RegExp(m, "g"), "");
+        for (const node of mutation.addedNodes)
+          replaceTextNodes(node);
       }
-    }
+    }).observe(document.body, { childList: true, subtree: true });
+
+    return;
   }
 
-  // stop here if we're inside a twitter embed
-  if (location.host === "platform.twitter.com")
-    return;
+  replaceTextNodes(document.body);
 
   // replace the text in the browser tab
   document.title = "💖 Turn Me Into A Boy! 💖";
@@ -88,7 +78,31 @@ the story of <a href="https://en.wikipedia.org/wiki/Marina_the_Monk">Marinos (Ma
 
   // fix stubborn button
   const opts = Vue.options.components["turn-me-into-a-girl-button"].options;
-  opts.template = opts.template.replace("girl", "boy");
+  opts.template = opts.template.replace(/girl/g, "boy");
+
+  // replace inside the random quotes at the top
+  for (let i in MESSAGES)
+    MESSAGES[i] = MESSAGES[i].replace(/girl/g, "boy");
+
+  /** @param {Node} root The root element or node to replace inside. */
+  function replaceTextNodes(root) {
+    const treeWalker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+
+    let node;
+    while (node = treeWalker.nextNode()) {
+      if (node.parentNode.closest("a[href^=http]")) // don't replace inside external links
+        continue;
+
+      for (const key in map) {
+        const re = new RegExp(key + `(?!${m})`, "gi");
+        if (re.test(node.textContent))
+          node.textContent = node.textContent.replace(re, map[key] + m);
+      }
+
+      if (node.textContent.includes(m))
+        node.textContent = node.textContent.replace(new RegExp(m, "g"), "");
+    }
+  }
 
   // make everything blue
   GM_addStyle(`
