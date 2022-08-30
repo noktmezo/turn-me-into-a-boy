@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Turn Me Into A Boy
-// @version      1.1
+// @version      1.2
 // @description  Turns turn-me-into-a-girl.com into turn-me-into-a-boy
 // @author       u/noktmezo
 // @match        https://turn-me-into-a-girl.com/*
@@ -51,35 +51,26 @@ in one, a monastic named <a href="https://en.wikipedia.org/wiki/Legend_of_Hilari
 the story of <a href="https://en.wikipedia.org/wiki/Marina_the_Monk">Marinos (Marina)</a>, another Byzantine, who became a monk in Lebanon, is similar.
 `;
 
-  // replace text inside new nodes
-  new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      if (!mutation.addedNodes) return;
-      for (const node of mutation.addedNodes) {
-        startReplacing(node);
-      }
-    }
-  }).observe(document.body, { childList: true, subtree: true, attributes: false, characterData: false });
-
   startReplacing();
 
   function startReplacing(contextNode = document.body) {
     replaceTextNodes(contextNode);
-
-    // remove final markers after a short delay
-    setTimeout(() => replaceTextNodes(contextNode, { [m]: ""}, false), 500);
   }
 
   function replaceTextNodes(contextNode, otherMap = map, addFinalMarker = true) {
     const treeWalker = document.createTreeWalker(contextNode, NodeFilter.SHOW_TEXT);
     let node;
     while (node = treeWalker.nextNode()) {
-      if (!node.parentNode.closest("a[href^=http]")) // don't replace inside external links
-        for (const key in otherMap)
-          node.textContent = node.textContent.replace(
-            new RegExp(key + `(?![${m}]+)`, "gi"),
-            otherMap[key] + (addFinalMarker ? m : "")
-          );
+      if (!node.parentNode.closest("a[href^=http]")) { // don't replace inside external links
+        for (const key in otherMap) {
+          const re = new RegExp(key + `(?!${m})`, "gi");
+          if (re.test(node.textContent))
+            node.textContent = node.textContent.replace(re, otherMap[key] + (addFinalMarker ? m : ""));
+        }
+
+        if (node.textContent.includes(m))
+          node.textContent = node.textContent.replace(new RegExp(m, "g"), "");
+      }
     }
   }
 
@@ -94,6 +85,10 @@ the story of <a href="https://en.wikipedia.org/wiki/Marina_the_Monk">Marinos (Ma
   const leadImg = document.querySelector(".lead-img");
   if (leadImg)
     leadImg.src = "https://i.imgur.com/1aTl7FD.png";
+
+  // fix stubborn button
+  const opts = Vue.options.components["turn-me-into-a-girl-button"].options;
+  opts.template = opts.template.replace("girl", "boy");
 
   // make everything blue
   GM_addStyle(`
