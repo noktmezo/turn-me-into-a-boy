@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Turn Me Into A Boy
-// @version      1.3
+// @version      1.4
 // @description  Turns turn-me-into-a-girl.com into turn-me-into-a-boy
 // @author       u/noktmezo
 // @match        https://turn-me-into-a-girl.com/*
+// @match        https://turnmeintoagirl.com/*
 // @match        https://platform.twitter.com/embed/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=turn-me-into-a-girl.com
 // @downloadURL  https://github.com/middernacht/turn-me-into-a-boy/raw/main/turn-me-into-a-boy.user.js
@@ -14,7 +15,7 @@
 
 (function () {
   // stop if the twitter embed isn't inside turn-me-into-a-girl.com
-  if (location.host === "platform.twitter.com" && document.referrer !== "https://turn-me-into-a-girl.com/")
+  if (location.host === "platform.twitter.com" && document.referrer !== "https://turn-me-into-a-girl.com/"  && document.referrer !== "https://turnmeintoagirl.com/")
     return;
 
   // marker to mark stuff that shouldn't be touched by following replacements
